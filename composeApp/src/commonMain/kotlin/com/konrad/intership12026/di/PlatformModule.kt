@@ -1,0 +1,6 @@
+package com.konrad.intership12026.di
+
+import org.koin.core.annotation.Module
+
+@Module
+expect class PlatformModule
