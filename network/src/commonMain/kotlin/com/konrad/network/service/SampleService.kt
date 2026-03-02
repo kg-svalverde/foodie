@@ -12,7 +12,9 @@ interface SampleService {
 }
 
 @Single
-class SampleServiceImpl(private val client: HttpClient) : SampleService {
+class SampleServiceImpl(
+    private val client: HttpClient
+) : SampleService {
     override suspend fun fetchSample(): List<SampleApiModel> {
         val result: SampleApiModelList = client.get("breeds").body()
         return result.data

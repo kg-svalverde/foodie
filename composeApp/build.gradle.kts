@@ -43,22 +43,33 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
+            // Local Modules
             implementation(projects.network)
+
+            // Navigation
+            implementation(libs.androidx.navigation.compose)
+            implementation(libs.multiplatform.navigation3)
+
+            // Compose
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
+            implementation(libs.compose.material.icons)
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(libs.androidx.navigation.compose)
-            implementation(libs.androidx.room.runtime)
-            implementation(libs.androidx.sqlite.bundle)
+
+            // Koin
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.viewmodel)
             implementation(libs.koin.annotations)
+
+            // Room
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundle)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
