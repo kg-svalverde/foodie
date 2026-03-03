@@ -28,6 +28,6 @@ fun LoginView(
 
     LoginLayout(
         viewState = viewState,
-        onButtonClick = { viewModel.handleIntent(LoginIntent.NavigateToProfile) }
+        onButtonClick = { viewModel.handleIntent(LoginIntent.NavigateToSelectUser) }
     )
 }

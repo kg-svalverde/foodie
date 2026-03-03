@@ -10,6 +10,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.konrad.intership12026.components.layout.AppNavigationBar
 import com.konrad.intership12026.feature.goalcalculator.ui.GoalCalculatorView
 import com.konrad.intership12026.feature.homepage.ui.HomePageView
 import com.konrad.intership12026.feature.initialsetup.ui.InitialSetupView
@@ -40,8 +41,29 @@ private val config = SavedStateConfiguration {
 @Composable
 fun MainNavHost() {
     val navBackStack = rememberNavBackStack(config, NavDestination.Login)
+    val currentDestination = navBackStack.last() as? NavDestination
 
-    Scaffold { innerPadding ->
+    val showBottomBar = currentDestination in listOf(
+        NavDestination.HomePage,
+        NavDestination.MealPlanner,
+        NavDestination.MarketMap,
+        NavDestination.Profile
+    )
+
+    Scaffold(
+        bottomBar = {
+            if (showBottomBar) {
+                AppNavigationBar(
+                    currentDestination = currentDestination,
+                    onItemSelected = { destination ->
+                        if (currentDestination != destination) {
+                            navBackStack.add(destination)
+                        }
+                    }
+                )
+            }
+        }
+    ) { innerPadding ->
         NavDisplay(
             modifier = Modifier
                 .fillMaxSize()

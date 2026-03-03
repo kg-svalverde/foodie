@@ -11,6 +11,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.konrad.intership12026.ui.theme.AppTheme
@@ -21,6 +22,7 @@ fun AppTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     label: String? = null,
+    style: TextStyle,
     placeholder: String = "",
     isError: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -32,9 +34,11 @@ fun AppTextField(
         label?.let {
             Text(
                 text = it,
-                style = MaterialTheme.typography.titleMedium,
+                style = style,
                 color = appColors.black,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
             )
         }
         OutlinedTextField(
@@ -42,7 +46,11 @@ fun AppTextField(
             onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
             placeholder = {
-                Text(text = placeholder, color = appColors.gray)
+                Text(
+                    text = placeholder,
+                    color = appColors.gray,
+                    fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                )
             },
             shape = RoundedCornerShape(12.dp),
             singleLine = true,
@@ -62,10 +70,13 @@ fun AppTextField(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 fun AppTextFieldPreview() {
-    AppTextField(
-        value = "1.82",
-        onValueChange = {  },
-        label = "Height",
-        placeholder = "height"
-    )
+    AppTheme {
+        AppTextField(
+            value = "1.82",
+            onValueChange = {  },
+            label = "Height",
+            placeholder = "height",
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
 }

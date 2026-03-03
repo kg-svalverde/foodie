@@ -21,6 +21,7 @@ import com.konrad.intership12026.ui.theme.AppTheme
 enum class ButtonVariant {
     Primary,
     Secondary,
+    Base,
     Outline
 }
 
@@ -43,6 +44,10 @@ fun AppButton(
         )
         ButtonVariant.Secondary -> ButtonDefaults.buttonColors(
             containerColor = appColors.secondary,
+            contentColor = appColors.background
+        )
+        ButtonVariant.Base -> ButtonDefaults.buttonColors(
+            containerColor = appColors.black,
             contentColor = appColors.background
         )
         ButtonVariant.Outline -> ButtonDefaults.outlinedButtonColors(

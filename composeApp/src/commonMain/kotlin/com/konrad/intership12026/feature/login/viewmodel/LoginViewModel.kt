@@ -30,9 +30,8 @@ class LoginViewModel(
 
     fun handleIntent(intent: LoginIntent) {
         when (intent) {
-            is LoginIntent.NavigateToMealPlanner -> emitNavigationEvent(NavDestination.MealPlanner)
-            is LoginIntent.NavigateToMarketMap -> emitNavigationEvent(NavDestination.MarketMap)
-            is LoginIntent.NavigateToProfile -> emitNavigationEvent(NavDestination.Profile)
+            is LoginIntent.NavigateToInitialSetup -> emitNavigationEvent(NavDestination.InitialSetup)
+            is LoginIntent.NavigateToSelectUser -> emitNavigationEvent(NavDestination.SelectUser)
         }
     }
 

@@ -20,22 +20,32 @@ fun ProvideAppTypography(content: @Composable (Typography) -> Unit) {
             titleLarge = TextStyle(
                 fontFamily = font,
                 fontWeight = FontWeight.Bold,
-                fontSize = 38.sp
+                fontSize = 26.sp
             ),
             titleMedium = TextStyle(
                 fontFamily = font,
                 fontWeight = FontWeight.Bold,
-                fontSize = 32.sp
+                fontSize = 22.sp
             ),
             titleSmall = TextStyle(
                 fontFamily = font,
                 fontWeight = FontWeight.Normal,
-                fontSize = 28.sp
+                fontSize = 16.sp
+            ),
+            bodyLarge = TextStyle(
+                fontFamily = font,
+                fontWeight = FontWeight.Normal,
+                fontSize = 20.sp
             ),
             bodyMedium = TextStyle(
                 fontFamily = font,
                 fontWeight = FontWeight.Normal,
-                fontSize = 20.sp
+                fontSize = 16.sp
+            ),
+            bodySmall = TextStyle(
+                fontFamily = font,
+                fontWeight = FontWeight.Normal,
+                fontSize = 12.sp
             )
         )
     }
