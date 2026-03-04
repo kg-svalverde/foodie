@@ -27,7 +27,7 @@ fun SelectUserView(
     }
 
     SelectUserLayout(
-        viewState = viewState,
+        //viewState = viewState,
         onButtonClick = { viewModel.handleIntent(SelectUserIntent.NavigateToProfile) }
     )
 }

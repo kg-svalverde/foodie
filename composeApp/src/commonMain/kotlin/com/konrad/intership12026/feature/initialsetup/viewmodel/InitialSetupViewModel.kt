@@ -10,26 +10,39 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.KoinViewModel
 
 @KoinViewModel
-class InitialSetupViewModel(
-    //private val useCase: SampleUseCase,
-): ViewModel() {
+class InitialSetupViewModel : ViewModel() {
 
-    private val _viewState = MutableStateFlow(InitialSetupState(""))
+    private val _viewState = MutableStateFlow(InitialSetupState())
     val viewState = _viewState.asStateFlow()
 
     private val _event = Channel<InitialSetupEvent>()
     val event = _event.receiveAsFlow()
 
-    init {
-        fetchSample()
-    }
-
     fun handleIntent(intent: InitialSetupIntent) {
         when (intent) {
+            is InitialSetupIntent.UpdateName -> {
+                _viewState.update { it.copy(name = intent.name) }
+            }
+            is InitialSetupIntent.UpdateDietaryPreference -> {
+                _viewState.update { it.copy(dietaryPreference = intent.preference) }
+            }
+            is InitialSetupIntent.AddAllergy -> {
+                _viewState.update { 
+                    if (!it.allergies.contains(intent.allergy)) {
+                        it.copy(allergies = it.allergies + intent.allergy)
+                    } else it
+                }
+            }
+            is InitialSetupIntent.RemoveAllergy -> {
+                _viewState.update { 
+                    it.copy(allergies = it.allergies - intent.allergy)
+                }
+            }
             is InitialSetupIntent.NavigateToMealPlanner -> emitNavigationEvent(NavDestination.MealPlanner)
             is InitialSetupIntent.NavigateToMarketMap -> emitNavigationEvent(NavDestination.MarketMap)
             is InitialSetupIntent.NavigateToProfile -> emitNavigationEvent(NavDestination.Profile)
@@ -39,18 +52,6 @@ class InitialSetupViewModel(
     private fun emitNavigationEvent(destination: NavDestination) {
         viewModelScope.launch {
             _event.send(InitialSetupEvent.NavigateTo(destination))
-        }
-    }
-
-    private fun fetchSample() {
-        viewModelScope.launch {
-            /*useCase.fetchSample()
-                .onSuccess { data ->
-                    _viewState.update { it.copy(information = data) }
-                }
-                .onFailure {
-                    println("Error $it")
-                }*/
         }
     }
 }

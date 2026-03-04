@@ -1,82 +1,123 @@
 package com.konrad.intership12026.feature.selectuser.ui
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.konrad.intership12026.feature.selectuser.model.SelectUserState
+import androidx.compose.ui.unit.sp
+import com.konrad.intership12026.components.cards.AppUserCard
+import com.konrad.intership12026.ui.theme.AppTheme
+import intership12026.composeapp.generated.resources.Res
+import intership12026.composeapp.generated.resources.foodie
+import intership12026.composeapp.generated.resources.user1
+import intership12026.composeapp.generated.resources.user2
+import intership12026.composeapp.generated.resources.user3
+import intership12026.composeapp.generated.resources.user4
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
-@Composable
-fun SelectUserLayout(
-    viewState: SelectUserState,
-    onButtonClick: () -> Unit = {},
+data class User(
+    val name: String,
+    val profilePic: DrawableResource
 ) {
-    Column {
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            /*items(items = viewState.information) {
-                SampleItem(sampleModel = it)
-            }*/
-        }
-        HorizontalDivider(
-            thickness = 2.dp,
+    companion object {
+        val dummies = listOf(
+            User("George", Res.drawable.user1),
+            User("Rebecca", Res.drawable.user2),
+            User("Kev", Res.drawable.user3),
+            User("Andrew", Res.drawable.user4)
         )
-        Button(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            onClick = onButtonClick
-        ) {
-            Text(text = "Navigate to Profile")
-        }
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SampleItem(
-    //sampleModel: SampleAppModel,
-    modifier: Modifier = Modifier,
+fun SelectUserLayout(
+    // viewState: SelectUserState,
+    users: List<User> = emptyList(),
+    onButtonClick: () -> Unit = {}
 ) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(all = 16.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Text(
+        Spacer(modifier = Modifier.height(48.dp))
+
+        Image(
+            painter = painterResource(Res.drawable.foodie),
+            contentDescription = "App's logo: Foodie",
+            contentScale = ContentScale.Fit,
             modifier = Modifier
-                .padding(top = 16.dp)
-                .padding(horizontal = 16.dp),
-            text = "", // sampleModel.name
-            fontWeight = FontWeight.Bold
+                .height(80.dp)
+                .padding(bottom = 32.dp)
         )
-        Text(
-            modifier = Modifier.padding(16.dp),
-            text = "", //sampleModel.description
-        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Column (
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ){
+            Text(
+                text = "Users",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp, start = 32.dp, end = 32.dp),
+                style = MaterialTheme.typography.headlineMedium,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = AppTheme.colors.black
+            )
+            FlowRow (
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+                    .fillMaxWidth(),
+                maxItemsInEachRow = 3,
+                horizontalArrangement = Arrangement.Center
+            ){
+                users.forEach {
+                    AppUserCard(
+                        modifier = Modifier
+                            .padding(8.dp),
+                        name = it.name,
+                        image = it.profilePic,
+                        onClick = { /* .. */ }
+                    )
+                }
+            }
+        }
     }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 private fun SelectUserLayoutPreview() {
-    /*val sampleModel = SampleAppModel(
-        name = "Sample Name",
-        description = "Sample Description"
-    )*/
-
-    SelectUserLayout(
-        viewState = SelectUserState("")
-    )
+    AppTheme {
+        SelectUserLayout(
+            // viewState = SelectUserState(""),
+            users = User.dummies,
+            onButtonClick = { }
+        )
+    }
 }

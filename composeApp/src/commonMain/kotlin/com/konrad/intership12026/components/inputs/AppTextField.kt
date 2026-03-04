@@ -76,7 +76,7 @@ fun AppTextFieldPreview() {
             onValueChange = {  },
             label = "Height",
             placeholder = "height",
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.titleSmall
         )
     }
 }

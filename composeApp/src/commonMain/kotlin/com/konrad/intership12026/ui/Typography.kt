@@ -17,6 +17,16 @@ fun ProvideAppTypography(content: @Composable (Typography) -> Unit) {
     val font = getInterFontFamily()
     val typography = remember(font) {
         Typography(
+            headlineLarge = TextStyle(
+                fontFamily = font,
+                fontWeight = FontWeight.Bold,
+                fontSize = 30.sp
+            ),
+            headlineMedium = TextStyle(
+                fontFamily = font,
+                fontWeight = FontWeight.Bold,
+                fontSize = 28.sp
+            ),
             titleLarge = TextStyle(
                 fontFamily = font,
                 fontWeight = FontWeight.Bold,
@@ -29,8 +39,8 @@ fun ProvideAppTypography(content: @Composable (Typography) -> Unit) {
             ),
             titleSmall = TextStyle(
                 fontFamily = font,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
             ),
             bodyLarge = TextStyle(
                 fontFamily = font,

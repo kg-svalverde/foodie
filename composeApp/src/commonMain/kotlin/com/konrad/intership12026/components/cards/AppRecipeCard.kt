@@ -4,13 +4,12 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.Card
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -18,64 +17,65 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.konrad.intership12026.ui.theme.AppTheme
 import intership12026.composeapp.generated.resources.Res
-import intership12026.composeapp.generated.resources.user3
+import intership12026.composeapp.generated.resources.recipe1
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppUserCard(
+fun AppRecipeCard(
     onClick: () -> Unit,
-    name: String,
+    title: String,
     image: DrawableResource,
-    // user: User,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
-            .size(width = 80.dp, height = 120.dp)
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .width(140.dp)
+            .padding(4.dp),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Card(
+        OutlinedCard(
             onClick = onClick,
             colors = CardDefaults.cardColors(
                 containerColor = AppTheme.colors.background,
             ),
+            border = BorderStroke(0.75.dp, AppTheme.colors.gray),
             modifier = Modifier
-                .size(width = 80.dp, height = 80.dp)
                 .fillMaxWidth()
-                .padding(top = 0.75.dp)
+                .height(90.dp)
         ) {
             Image(
-                painter = painterResource(image), // user.profile_pic
-                contentDescription = "User's profile picture",
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .fillMaxWidth()
+                painter = painterResource(image),
+                contentDescription = "Recipe image",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
             )
         }
         Text(
-            text = name,  // user.name
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentSize(align = Alignment.Center)
+            text = title,
+            style = MaterialTheme.typography.bodySmall,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-fun AppUserCardPreview() {
-    val image: DrawableResource = Res.drawable.user3
-
+fun AppRecipeCardPreview() {
+    val image: DrawableResource = Res.drawable.recipe1
     AppTheme {
-        AppUserCard(onClick = {}, name = "John Doe", image = image)
+        AppRecipeCard(
+            title = "Chicken Alfredo Pasta",
+            image = image,
+            onClick = { }
+        )
     }
 }
