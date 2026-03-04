@@ -1,82 +1,189 @@
 package com.konrad.intership12026.feature.goalcalculator.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.konrad.intership12026.components.buttons.AppButton
+import com.konrad.intership12026.components.buttons.ButtonVariant
+import com.konrad.intership12026.components.inputs.AppDropdown
+import com.konrad.intership12026.components.inputs.AppTextField
+import com.konrad.intership12026.components.cards.AppKPICard
 import com.konrad.intership12026.feature.goalcalculator.model.GoalCalculatorState
+import com.konrad.intership12026.ui.theme.AppTheme
 
 @Composable
 fun GoalCalculatorLayout(
     viewState: GoalCalculatorState,
+    onAgeChange: (Float) -> Unit = {},
+    onHeightChange: (String) -> Unit = {},
+    onWeightChange: (String) -> Unit = {},
+    onActivityLevelChange: (String) -> Unit = {},
+    onHealthGoalChange: (String) -> Unit = {},
     onButtonClick: () -> Unit = {},
 ) {
-    Column {
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            /*items(items = viewState.information) {
-                SampleItem(sampleModel = it)
-            }*/
-        }
-        HorizontalDivider(
-            thickness = 2.dp,
-        )
-        Button(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            onClick = onButtonClick
-        ) {
-            Text(text = "Navigate to Profile")
-        }
-    }
-}
-
-@Composable
-fun SampleItem(
-    //sampleModel: SampleAppModel,
-    modifier: Modifier = Modifier,
-) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(all = 16.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 32.dp)
     ) {
         Text(
+            text = "Goal Calculator",
+            style = MaterialTheme.typography.headlineLarge,
+            fontWeight = FontWeight.Bold,
+            color = AppTheme.colors.black,
             modifier = Modifier
-                .padding(top = 16.dp)
-                .padding(horizontal = 16.dp),
-            text = "", // sampleModel.name
-            fontWeight = FontWeight.Bold
+                .fillMaxWidth()
+                .padding(bottom = 24.dp, top = 48.dp)
         )
-        Text(
-            modifier = Modifier.padding(16.dp),
-            text = "", //sampleModel.description
-        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            AppKPICard(
+                title = "Daily Calories",
+                value = "${viewState.dailyCalories}",
+                unit = "kcal"
+            )
+            AppKPICard(
+                title = "Macros (P/C/F)",
+                value = "${viewState.proteinGrams}/${viewState.carbGrams}/${viewState.fatGrams}",
+                unit = "grams",
+                modifier = Modifier.weight(1f)
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            Column(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Age",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = AppTheme.colors.black
+                    )
+                    Text(
+                        text = "${viewState.age.toInt()} years",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = AppTheme.colors.primary,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Slider(
+                    value = viewState.age,
+                    onValueChange = onAgeChange,
+                    valueRange = 15f..100f,
+                    colors = SliderDefaults.colors(
+                        thumbColor = AppTheme.colors.primary,
+                        activeTrackColor = AppTheme.colors.primary,
+                        inactiveTrackColor = AppTheme.colors.lightGray
+                    )
+                )
+            }
+
+            AppTextField(
+                value = viewState.height.toString(),
+                label = "Height (cm)",
+                onValueChange = onHeightChange,
+                placeholder = "e.g. 175",
+                style = MaterialTheme.typography.titleSmall,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            )
+
+            AppTextField(
+                value = viewState.weight.toString(),
+                label = "Weight (kg)",
+                onValueChange = onWeightChange,
+                placeholder = "e.g. 70",
+                style = MaterialTheme.typography.titleSmall,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            )
+
+            AppDropdown(
+                options = listOf("Sedentary", "Moderately Active", "Active", "Very Active"),
+                selectedOption = viewState.activityLevel,
+                onOptionSelected = onActivityLevelChange,
+                label = "Activity Level",
+                placeholder = "Select activity level",
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            )
+
+            AppDropdown(
+                options = listOf("Lose Weight", "Maintain Weight", "Gain Weight"),
+                selectedOption = viewState.healthGoal,
+                onOptionSelected = onHealthGoalChange,
+                label = "Primary health goal",
+                placeholder = "Select health goal",
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp)
+            )
+
+            AppButton(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
+                onClick = onButtonClick,
+                variant = ButtonVariant.Base
+            ) {
+                Text(text = "Save Goals")
+            }
+        }
     }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
 private fun GoalCalculatorLayoutPreview() {
-    /*val sampleModel = SampleAppModel(
-        name = "Sample Name",
-        description = "Sample Description"
-    )*/
-
-    GoalCalculatorLayout(
-        viewState = GoalCalculatorState("")
-    )
+    AppTheme {
+        GoalCalculatorLayout(
+            viewState = GoalCalculatorState(
+                age = 28f,
+                height = 180,
+                weight = 75f,
+                activityLevel = "Active",
+                healthGoal = "Maintain Weight",
+                dailyCalories = 2400,
+                proteinGrams = 150,
+                carbGrams = 300,
+                fatGrams = 60
+            )
+        )
+    }
 }

@@ -18,7 +18,8 @@ class GoalCalculatorViewModel(
     //private val useCase: SampleUseCase,
 ): ViewModel() {
 
-    private val _viewState = MutableStateFlow(GoalCalculatorState(""))
+    private val _viewState = MutableStateFlow(GoalCalculatorState(0f,
+        0, 0f, "", "", 0, 0, 0, 0))
     val viewState = _viewState.asStateFlow()
 
     private val _event = Channel<GoalCalculatorEvent>()
@@ -30,9 +31,8 @@ class GoalCalculatorViewModel(
 
     fun handleIntent(intent: GoalCalculatorIntent) {
         when (intent) {
-            is GoalCalculatorIntent.NavigateToMealPlanner -> emitNavigationEvent(NavDestination.MealPlanner)
-            is GoalCalculatorIntent.NavigateToMarketMap -> emitNavigationEvent(NavDestination.MarketMap)
-            is GoalCalculatorIntent.NavigateToProfile -> emitNavigationEvent(NavDestination.Profile)
+            is GoalCalculatorIntent.NavigateToInitialSetup -> emitNavigationEvent(NavDestination.InitialSetup)
+            is GoalCalculatorIntent.NavigateToHomePage -> emitNavigationEvent(NavDestination.HomePage)
         }
     }
 

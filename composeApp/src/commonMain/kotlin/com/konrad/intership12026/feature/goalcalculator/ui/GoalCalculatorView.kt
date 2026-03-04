@@ -28,6 +28,6 @@ fun GoalCalculatorView(
 
     GoalCalculatorLayout(
         viewState = viewState,
-        onButtonClick = { viewModel.handleIntent(GoalCalculatorIntent.NavigateToProfile) }
+        onButtonClick = { viewModel.handleIntent(GoalCalculatorIntent.NavigateToHomePage) }
     )
 }
