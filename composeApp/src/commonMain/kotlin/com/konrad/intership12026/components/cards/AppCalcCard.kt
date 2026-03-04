@@ -30,7 +30,7 @@ import com.konrad.intership12026.ui.theme.AppTheme
 fun AppCalcCard(
     title: String,
     value: String,
-    unit: String,
+    unit: String = "",
     modifier: Modifier = Modifier,
     color: Color,
     type: String,

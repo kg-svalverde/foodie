@@ -16,7 +16,7 @@ fun HomePageView(
     navBackStack: NavBackStack<NavKey>,
     viewModel: HomePageViewModel = koinViewModel(),
 ) {
-    /*val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.event.collect {
@@ -28,6 +28,6 @@ fun HomePageView(
 
     HomePageLayout(
         viewState = viewState,
-        onButtonClick = { viewModel.handleIntent(HomePageIntent.NavigateToProfile) }
-    )*/
+        onRecipeClick = { viewModel.handleIntent(HomePageIntent.NavigateToProfile) }
+    )
 }

@@ -2,6 +2,7 @@ package com.konrad.intership12026.feature.selectuser.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.konrad.intership12026.data.AppData
 import com.konrad.intership12026.feature.selectuser.model.SelectUserEvent
 import com.konrad.intership12026.feature.selectuser.model.SelectUserIntent
 import com.konrad.intership12026.feature.selectuser.model.SelectUserState
@@ -10,6 +11,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.KoinViewModel
 
@@ -18,7 +20,7 @@ class SelectUserViewModel(
     //private val useCase: SampleUseCase,
 ): ViewModel() {
 
-    private val _viewState = MutableStateFlow(SelectUserState(""))
+    private val _viewState = MutableStateFlow(SelectUserState(emptyList()))
     val viewState = _viewState.asStateFlow()
 
     private val _event = Channel<SelectUserEvent>()
@@ -44,13 +46,7 @@ class SelectUserViewModel(
 
     private fun fetchSample() {
         viewModelScope.launch {
-            /*useCase.fetchSample()
-                .onSuccess { data ->
-                    _viewState.update { it.copy(information = data) }
-                }
-                .onFailure {
-                    println("Error $it")
-                }*/
+            _viewState.update { it.copy(users = AppData.users) }
         }
     }
 }

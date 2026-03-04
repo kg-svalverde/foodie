@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.konrad.intership12026.components.cards.AppUserCard
+import com.konrad.intership12026.data.AppData
+import com.konrad.intership12026.feature.selectuser.model.SelectUserState
 import com.konrad.intership12026.ui.theme.AppTheme
 import intership12026.composeapp.generated.resources.Res
 import intership12026.composeapp.generated.resources.foodie
@@ -49,8 +50,7 @@ data class User(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SelectUserLayout(
-    // viewState: SelectUserState,
-    users: List<User> = emptyList(),
+    viewState: SelectUserState,
     onButtonClick: () -> Unit = {}
 ) {
     Column(
@@ -96,11 +96,11 @@ fun SelectUserLayout(
                 maxItemsInEachRow = 3,
                 horizontalArrangement = Arrangement.Center
             ){
-                users.forEach {
+                viewState.users.forEach {
                     AppUserCard(
                         modifier = Modifier
                             .padding(8.dp),
-                        name = it.name,
+                        name = it.firstName,
                         image = it.profilePic,
                         onClick = { /* .. */ }
                     )
@@ -115,8 +115,7 @@ fun SelectUserLayout(
 private fun SelectUserLayoutPreview() {
     AppTheme {
         SelectUserLayout(
-            // viewState = SelectUserState(""),
-            users = User.dummies,
+            viewState = SelectUserState(AppData.users),
             onButtonClick = { }
         )
     }

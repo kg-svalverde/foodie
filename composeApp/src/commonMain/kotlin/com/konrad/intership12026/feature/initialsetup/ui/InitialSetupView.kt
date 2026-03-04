@@ -28,6 +28,7 @@ fun InitialSetupView(
 
     InitialSetupLayout(
         viewState = viewState,
+        onNameChange = { viewModel.handleIntent(InitialSetupIntent.UpdateName(it)) },
         onButtonClick = { viewModel.handleIntent(InitialSetupIntent.NavigateToProfile) }
     )
 }

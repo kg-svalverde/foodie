@@ -50,12 +50,12 @@ fun ProvideAppTypography(content: @Composable (Typography) -> Unit) {
             bodyMedium = TextStyle(
                 fontFamily = font,
                 fontWeight = FontWeight.Normal,
-                fontSize = 16.sp
+                fontSize = 12.sp
             ),
             bodySmall = TextStyle(
                 fontFamily = font,
                 fontWeight = FontWeight.Normal,
-                fontSize = 12.sp
+                fontSize = 8.sp
             )
         )
     }

@@ -1,6 +1,8 @@
 package com.konrad.intership12026.feature.selectuser.model
 
+import com.konrad.intership12026.data.UserModel
+
 data class SelectUserState(
-    val i: String
-    //val information: List<SampleAppModel> = emptyList()
+
+    val users: List<UserModel>
 )

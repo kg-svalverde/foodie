@@ -24,9 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.konrad.intership12026.ui.theme.AppTheme
 import intership12026.composeapp.generated.resources.Res
 import intership12026.composeapp.generated.resources.icon_carbs
@@ -55,8 +57,7 @@ fun AppMacrosKPICard(
     Card(
         modifier = modifier
             .wrapContentWidth()
-            .fillMaxWidth()
-            .padding(8.dp),
+            .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = containerColor.copy(alpha = 0.3f)),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
@@ -87,7 +88,7 @@ fun AppMacrosKPICard(
             Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 macros.forEach { macro ->
                     AppMacroCard(
@@ -107,59 +108,65 @@ fun AppMacroCard(
 ) {
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = macro.color.copy(alpha = 0.1f)
+            containerColor = macro.color.copy(alpha = 0.2f)
         )
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.padding(vertical = 12.dp, horizontal = 4.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            Box(
+                modifier = Modifier
+                    .size(28.dp)
+                    .clip(CircleShape)
+                    .background(macro.color.copy(alpha = 0.3f)),
+                contentAlignment = Alignment.Center
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(32.dp)
-                        .clip(CircleShape)
-                        .background(macro.color.copy(alpha = 0.2f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = painterResource(macro.icon),
-                        contentDescription = null,
-                        //tint = macro.color,
-                        modifier = Modifier.size(18.dp)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = macro.label,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = AppTheme.colors.gray,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                Icon(
+                    painter = painterResource(macro.icon),
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp)
                 )
             }
 
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = macro.label,
+                style = MaterialTheme.typography.labelSmall,
+                fontSize = 10.sp,
+                color = AppTheme.colors.gray,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+
             Spacer(modifier = Modifier.height(4.dp))
 
-            Row(verticalAlignment = Alignment.Bottom) {
+            Row(
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text(
                     text = "${macro.current}",
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.bodySmall,
+                    fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
-                    color = AppTheme.colors.black
+                    color = AppTheme.colors.black,
+                    maxLines = 1
                 )
                 Text(
                     text = "/${macro.goal}${macro.unit}",
                     style = MaterialTheme.typography.labelSmall,
+                    fontSize = 9.sp,
                     color = AppTheme.colors.gray,
-                    modifier = Modifier.padding(bottom = 2.dp, start = 2.dp)
+                    maxLines = 1,
+                    modifier = Modifier.padding(bottom = 1.dp, start = 1.dp)
                 )
             }
         }

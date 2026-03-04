@@ -7,38 +7,38 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.konrad.intership12026.ui.theme.AppTheme
 
+data class ProfileInfoItem(
+    val label: String,
+    val value: String
+)
+
 @Composable
-fun AppCalorieKPICard(
+fun AppProfileInfoCard(
     title: String,
     subtitle: String = "",
-    value: String,
-    goal: String,
-    unit: String,
+    infoItems: List<ProfileInfoItem>,
     modifier: Modifier = Modifier,
     color: Color
 ) {
     Card(
         modifier = modifier
-            .wrapContentWidth()
             .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
@@ -60,62 +60,66 @@ fun AppCalorieKPICard(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(
-                text = subtitle,
-                style = MaterialTheme.typography.labelMedium,
-                color = AppTheme.colors.gray,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                verticalAlignment = Alignment.Bottom,
-                modifier = Modifier.wrapContentWidth()
-            ) {
+            if (subtitle.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(2.dp))
                 Text(
-                    text = value,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = AppTheme.colors.secondary,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f, fill = false)
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = "/$goal$unit",
+                    text = subtitle,
                     style = MaterialTheme.typography.labelMedium,
                     color = AppTheme.colors.gray,
                     maxLines = 1,
-                    modifier = Modifier.padding(bottom = 2.dp)
+                    overflow = TextOverflow.Ellipsis
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
-            LinearProgressIndicator(
-                progress = { value.toFloat() / goal.toFloat() },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .size(6.dp),
-                color = AppTheme.colors.secondary,
-                trackColor = AppTheme.colors.tertiary,
-                strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
-                gapSize = 2.dp
-            )
+            
+            infoItems.forEachIndexed { index, item ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = item.label,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = AppTheme.colors.gray,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Text(
+                        text = item.value,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = AppTheme.colors.black,
+                        modifier = Modifier.wrapContentWidth()
+                    )
+                }
+                if (index < infoItems.size - 1) {
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = 8.dp),
+                        thickness = 0.5.dp,
+                        color = AppTheme.colors.gray.copy(alpha = 0.2f)
+                    )
+                }
+            }
         }
     }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun AppCalorieKPICardPreview(){
-    AppTheme{
-        AppCalorieKPICard(
-            title = "Daily Progress",
-            subtitle = "Calories consumed",
-            value = "1524",
-            goal = "2100",
-            unit = "kcal",
+private fun AppProfileInfoCardPreview() {
+    AppTheme {
+        AppProfileInfoCard(
+            title = "Personal Information",
+            subtitle = "Your physical data and goals",
             color = AppTheme.colors.white,
+            infoItems = listOf(
+                ProfileInfoItem("Age", "25 years"),
+                ProfileInfoItem("Weight", "75 kg"),
+                ProfileInfoItem("Height", "180 cm"),
+                ProfileInfoItem("Primary Goal", "Weight Loss"),
+                ProfileInfoItem("Allergies", "Peanuts, Shellfish"),
+                ProfileInfoItem("Restrictions", "None")
+            )
         )
     }
 }
