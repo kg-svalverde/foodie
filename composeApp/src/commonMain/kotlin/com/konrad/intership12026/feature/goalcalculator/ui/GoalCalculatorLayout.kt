@@ -28,7 +28,7 @@ import com.konrad.intership12026.components.buttons.AppButton
 import com.konrad.intership12026.components.buttons.ButtonVariant
 import com.konrad.intership12026.components.inputs.AppDropdown
 import com.konrad.intership12026.components.inputs.AppTextField
-import com.konrad.intership12026.components.cards.AppKPICard
+import com.konrad.intership12026.components.cards.AppCalcCard
 import com.konrad.intership12026.feature.goalcalculator.model.GoalCalculatorState
 import com.konrad.intership12026.ui.theme.AppTheme
 
@@ -64,7 +64,7 @@ fun GoalCalculatorLayout(
                 .padding(bottom = 24.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            AppKPICard(
+            AppCalcCard(
                 title = "Daily Calories",
                 value = "${viewState.dailyCalories}",
                 unit = "kcal",
@@ -72,7 +72,7 @@ fun GoalCalculatorLayout(
                 type = "calories",
                 modifier = Modifier.fillMaxHeight()
             )
-            AppKPICard(
+            AppCalcCard(
                 title = "Macros (P/C/F)",
                 value = "${viewState.proteinGrams}/${viewState.carbGrams}/${viewState.fatGrams}",
                 unit = "grams",

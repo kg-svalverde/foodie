@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.konrad.intership12026.ui.theme.AppTheme
 
 @Composable
-fun AppKPICard(
+fun AppCalcCard(
     title: String,
     value: String,
     unit: String,
@@ -45,7 +45,7 @@ fun AppKPICard(
         Column(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxHeight() // Ensure the content stretches to the Card's height
+                .fillMaxHeight()
                 .wrapContentWidth(),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center
@@ -86,7 +86,7 @@ fun AppKPICard(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFF)
 @Composable
-private fun AppKPICardPreview() {
+private fun AppCalcCardPreview() {
     AppTheme {
         Row(
             modifier = Modifier
@@ -95,7 +95,7 @@ private fun AppKPICardPreview() {
                 .height(IntrinsicSize.Min),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            AppKPICard(
+            AppCalcCard(
                 title = "Daily Calories",
                 value = "2400",
                 unit = "kcal",
@@ -103,7 +103,7 @@ private fun AppKPICardPreview() {
                 type = "calories",
                 modifier = Modifier.fillMaxHeight()
             )
-            AppKPICard(
+            AppCalcCard(
                 title = "Macros (P/C/F)",
                 value = "150/300/60",
                 unit = "grams",
