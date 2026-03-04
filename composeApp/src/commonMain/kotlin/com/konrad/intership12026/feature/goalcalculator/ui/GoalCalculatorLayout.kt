@@ -2,9 +2,13 @@ package com.konrad.intership12026.feature.goalcalculator.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -56,24 +60,31 @@ fun GoalCalculatorLayout(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(IntrinsicSize.Min)
                 .padding(bottom = 24.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             AppKPICard(
                 title = "Daily Calories",
                 value = "${viewState.dailyCalories}",
-                unit = "kcal"
+                unit = "kcal",
+                color = AppTheme.colors.quaternary,
+                type = "calories",
+                modifier = Modifier.fillMaxHeight()
             )
             AppKPICard(
                 title = "Macros (P/C/F)",
                 value = "${viewState.proteinGrams}/${viewState.carbGrams}/${viewState.fatGrams}",
                 unit = "grams",
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).fillMaxHeight(),
+                color = AppTheme.colors.quaternary,
+                type = "macros"
             )
         }
 
         Column(
             modifier = Modifier
+                .fillMaxWidth()
                 .weight(1f)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -102,8 +113,8 @@ fun GoalCalculatorLayout(
                     onValueChange = onAgeChange,
                     valueRange = 15f..100f,
                     colors = SliderDefaults.colors(
-                        thumbColor = AppTheme.colors.primary,
-                        activeTrackColor = AppTheme.colors.primary,
+                        thumbColor = AppTheme.colors.secondary,
+                        activeTrackColor = AppTheme.colors.secondary,
                         inactiveTrackColor = AppTheme.colors.lightGray
                     )
                 )
@@ -162,7 +173,7 @@ fun GoalCalculatorLayout(
                 onClick = onButtonClick,
                 variant = ButtonVariant.Base
             ) {
-                Text(text = "Save Goals")
+                Text(text = "Continue")
             }
         }
     }
