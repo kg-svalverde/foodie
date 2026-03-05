@@ -21,6 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.konrad.intership12026.components.cards.AppCreateNewUserCard
 import com.konrad.intership12026.components.cards.AppUserCard
 import com.konrad.intership12026.data.AppData
 import com.konrad.intership12026.data.UserModel
@@ -34,8 +35,8 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun SelectUserLayout(
     viewState: SelectUserState,
-    onUserSelected: (UserModel) -> Unit
-
+    onUserSelected: (UserModel) -> Unit,
+    onAddNewUser: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -80,22 +81,25 @@ fun SelectUserLayout(
                     .fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(24.dp))
-            FlowRow (
+            FlowRow(
                 modifier = Modifier
                     .padding(bottom = 16.dp)
-                    .fillMaxSize(),
+                    .fillMaxWidth(),
                 maxItemsInEachRow = 3,
                 horizontalArrangement = Arrangement.Center
-            ){
-                viewState.users.forEach {
+            ) {
+                viewState.users.forEach { user ->
                     AppUserCard(
-                        modifier = Modifier
-                            .padding(8.dp),
-                        name = it.firstName,
-                        image = it.profilePic,
-                        onClick = { onUserSelected(it) }
+                        modifier = Modifier.padding(8.dp),
+                        name = user.firstName,
+                        image = user.profilePic,
+                        onClick = { onUserSelected(user) }
                     )
                 }
+                AppCreateNewUserCard(
+                    modifier = Modifier.padding(8.dp),
+                    onClick = onAddNewUser
+                )
             }
         }
     }
@@ -107,7 +111,8 @@ private fun SelectUserLayoutPreview() {
     AppTheme {
         SelectUserLayout(
             viewState = SelectUserState(AppData.users),
-            onUserSelected = { }
+            onUserSelected = { },
+            onAddNewUser = { }
         )
     }
 }

@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
-import com.konrad.intership12026.data.AppData
 import com.konrad.intership12026.feature.selectuser.model.SelectUserEvent
 import com.konrad.intership12026.feature.selectuser.model.SelectUserIntent
 import com.konrad.intership12026.feature.selectuser.viewmodel.SelectUserViewModel
@@ -20,9 +19,11 @@ fun SelectUserView(
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.event.collect {
-            when (it) {
-                is SelectUserEvent.NavigateTo -> navBackStack.add(it.destination)
+        viewModel.event.collect { event ->
+            when (event) {
+                is SelectUserEvent.NavigateTo -> {
+                    navBackStack.add(event.destination)
+                }
             }
         }
     }
@@ -30,8 +31,12 @@ fun SelectUserView(
     SelectUserLayout(
         viewState = viewState,
         onUserSelected = { user ->
-            AppData.setCurrentUser(user)
-            viewModel.handleIntent(SelectUserIntent.NavigateToHomePage)
+            // Instead of logic here, tell the ViewModel what happened
+            viewModel.handleIntent(SelectUserIntent.UserSelected(user))
+        },
+        onAddNewUser = {
+            // Tell the ViewModel to handle the "Add" intent
+            viewModel.handleIntent(SelectUserIntent.AddNewUserClicked)
         }
     )
 }

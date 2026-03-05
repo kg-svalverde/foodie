@@ -1,7 +1,9 @@
 package com.konrad.intership12026.feature.mealplanner.model
 
-sealed interface MealPlannerIntent {
+import com.konrad.intership12026.data.RecipeModel
 
-    data object NavigateToProfile: MealPlannerIntent
-
+sealed class MealPlannerIntent {
+    data class DaySelected(val index: Int) : MealPlannerIntent()
+    data class RecipeClicked(val recipe: RecipeModel): MealPlannerIntent()
+    data object DismissRecipeDialog : MealPlannerIntent()
 }

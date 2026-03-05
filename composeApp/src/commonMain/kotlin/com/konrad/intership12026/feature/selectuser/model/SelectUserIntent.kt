@@ -1,7 +1,12 @@
 package com.konrad.intership12026.feature.selectuser.model
 
-sealed interface SelectUserIntent {
+import com.konrad.intership12026.data.UserModel
 
-    data object NavigateToHomePage: SelectUserIntent
+sealed class SelectUserIntent {
+
+    /*data object NavigateToHomePage: SelectUserIntent()
+    data object NavigateToInitialSetup: SelectUserIntent()*/
+    data class UserSelected(val user: UserModel) : SelectUserIntent()
+    object AddNewUserClicked : SelectUserIntent()
 
 }

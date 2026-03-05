@@ -1,10 +1,8 @@
 package com.konrad.intership12026.feature.homepage.model
 
-sealed interface HomePageIntent {
+import com.konrad.intership12026.data.RecipeModel
 
-    data object NavigateToMealPlanner: HomePageIntent
-    data object NavigateToMarketMap: HomePageIntent
-    data object NavigateToProfile: HomePageIntent
-    data object NavigateToInitialSetup: HomePageIntent
-
+sealed class HomePageIntent {
+    data object NavigateToProfile: HomePageIntent()
+    data class RecipeClicked(val recipe: RecipeModel): HomePageIntent()
 }

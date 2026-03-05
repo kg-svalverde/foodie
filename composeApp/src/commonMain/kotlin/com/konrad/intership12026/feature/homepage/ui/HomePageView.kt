@@ -27,7 +27,6 @@ fun HomePageView(
     }
 
     HomePageLayout(
-        viewState = viewState,
-        onRecipeClick = { viewModel.handleIntent(HomePageIntent.NavigateToProfile) }
+        viewState = viewState
     )
 }

@@ -103,8 +103,7 @@ fun MainNavHost() {
                 entry<NavDestination.Login> { LoginView(navBackStack) }
                 entry<NavDestination.InitialSetup> { InitialSetupView(navBackStack) }
                 entry<NavDestination.GoalCalculator> { GoalCalculatorView(navBackStack) }
-                entry<NavDestination.SelectUser> { SelectUserView(navBackStack) }
-
+                entry<NavDestination.SelectUser> { SelectUserView(navBackStack)}
                 /* Functionalities */
                 entry<NavDestination.HomePage> { HomePageView(navBackStack) }
                 entry<NavDestination.MealPlanner> { MealPlannerView(navBackStack) }

@@ -1,5 +1,6 @@
 package com.konrad.intership12026.feature.goalcalculator.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -46,16 +47,26 @@ fun GoalCalculatorLayout(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 32.dp)
+            .verticalScroll(rememberScrollState())
     ) {
-        Text(
-            text = "Goal Calculator",
-            style = MaterialTheme.typography.headlineLarge,
-            fontWeight = FontWeight.Bold,
-            color = AppTheme.colors.black,
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 24.dp, top = 48.dp)
-        )
+                .padding(top = 32.dp)
+        ) {
+            Text(
+                text = "Goal Calculator",
+                style = MaterialTheme.typography.headlineLarge,
+                fontWeight = FontWeight.Bold,
+                color = AppTheme.colors.black
+            )
+            Text(
+                text = "Everything we need to know!",
+                style = MaterialTheme.typography.bodyMedium,
+                color = AppTheme.colors.gray
+            )
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
 
         Row(
             modifier = Modifier

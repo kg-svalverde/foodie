@@ -1,11 +1,7 @@
 package com.konrad.intership12026.feature.profile.model
 
+import com.konrad.intership12026.data.UserModel
+
 data class ProfileState(
-    val name: String = "Samuel",
-    val age: String = "25",
-    val weight: String = "75 kg",
-    val height: String = "180 cm",
-    val goal: String = "Weight Loss",
-    val allergies: String = "Peanuts, Shellfish",
-    val restrictions: String = "None"
+    val user: UserModel? = null
 )

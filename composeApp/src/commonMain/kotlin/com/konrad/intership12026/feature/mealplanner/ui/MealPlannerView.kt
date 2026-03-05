@@ -16,7 +16,7 @@ fun MealPlannerView(
     navBackStack: NavBackStack<NavKey>,
     viewModel: MealPlannerViewModel = koinViewModel(),
 ) {
-    /*val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         viewModel.event.collect {
@@ -28,6 +28,8 @@ fun MealPlannerView(
 
     MealPlannerLayout(
         viewState = viewState,
-        onButtonClick = { viewModel.handleIntent(MealPlannerIntent.NavigateToProfile) }
-    )*/
+        onDaySelected = { viewModel.handleIntent(MealPlannerIntent.DaySelected(it)) },
+        onRecipeClick = { viewModel.handleIntent(MealPlannerIntent.RecipeClicked(it)) },
+        onDismissDialog = { viewModel.handleIntent(MealPlannerIntent.DismissRecipeDialog) }
+    )
 }

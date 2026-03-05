@@ -1,8 +1,12 @@
 package com.konrad.intership12026.feature.login.model
 
-sealed interface LoginIntent {
+import com.konrad.intership12026.data.UserModel
+import com.konrad.intership12026.feature.selectuser.model.SelectUserIntent
 
-    data object NavigateToInitialSetup: LoginIntent
-    data object NavigateToSelectUser: LoginIntent
+sealed class LoginIntent {
 
+    data class EmailChanged(val email: String) : LoginIntent()
+    data class PasswordChanged(val password: String) : LoginIntent()
+    data object LoginClicked : LoginIntent()
+    data object SignUpClicked : LoginIntent()
 }

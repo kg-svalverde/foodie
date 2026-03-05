@@ -17,7 +17,7 @@ import org.koin.core.annotation.KoinViewModel
 
 @KoinViewModel
 class SelectUserViewModel(
-    //private val useCase: SampleUseCase,
+
 ): ViewModel() {
 
     private val _viewState = MutableStateFlow(SelectUserState(emptyList()))
@@ -32,7 +32,13 @@ class SelectUserViewModel(
 
     fun handleIntent(intent: SelectUserIntent) {
         when (intent) {
-            is SelectUserIntent.NavigateToHomePage -> emitNavigationEvent(NavDestination.HomePage)
+            is SelectUserIntent.UserSelected -> {
+                AppData.setCurrentUser(intent.user)
+                emitNavigationEvent(NavDestination.HomePage)
+            }
+            is SelectUserIntent.AddNewUserClicked -> {
+                emitNavigationEvent(NavDestination.InitialSetup)
+            }
         }
     }
 
