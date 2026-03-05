@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
+import com.konrad.intership12026.data.AppData
 import com.konrad.intership12026.feature.selectuser.model.SelectUserEvent
 import com.konrad.intership12026.feature.selectuser.model.SelectUserIntent
 import com.konrad.intership12026.feature.selectuser.viewmodel.SelectUserViewModel
@@ -28,6 +29,9 @@ fun SelectUserView(
 
     SelectUserLayout(
         viewState = viewState,
-        onButtonClick = { viewModel.handleIntent(SelectUserIntent.NavigateToProfile) }
+        onUserSelected = { user ->
+            AppData.setCurrentUser(user)
+            viewModel.handleIntent(SelectUserIntent.NavigateToHomePage)
+        }
     )
 }

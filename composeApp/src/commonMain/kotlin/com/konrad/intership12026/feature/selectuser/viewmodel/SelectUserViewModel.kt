@@ -27,14 +27,12 @@ class SelectUserViewModel(
     val event = _event.receiveAsFlow()
 
     init {
-        fetchSample()
+        fetchUsers()
     }
 
     fun handleIntent(intent: SelectUserIntent) {
         when (intent) {
-            is SelectUserIntent.NavigateToMealPlanner -> emitNavigationEvent(NavDestination.MealPlanner)
-            is SelectUserIntent.NavigateToMarketMap -> emitNavigationEvent(NavDestination.MarketMap)
-            is SelectUserIntent.NavigateToProfile -> emitNavigationEvent(NavDestination.Profile)
+            is SelectUserIntent.NavigateToHomePage -> emitNavigationEvent(NavDestination.HomePage)
         }
     }
 
@@ -44,7 +42,7 @@ class SelectUserViewModel(
         }
     }
 
-    private fun fetchSample() {
+    private fun fetchUsers() {
         viewModelScope.launch {
             _viewState.update { it.copy(users = AppData.users) }
         }

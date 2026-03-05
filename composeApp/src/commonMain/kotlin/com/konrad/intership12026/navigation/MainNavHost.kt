@@ -4,13 +4,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import com.konrad.intership12026.components.layout.AppHeader
 import com.konrad.intership12026.components.layout.AppNavigationBar
+import com.konrad.intership12026.data.AppData
 import com.konrad.intership12026.feature.goalcalculator.ui.GoalCalculatorView
 import com.konrad.intership12026.feature.homepage.ui.HomePageView
 import com.konrad.intership12026.feature.initialsetup.ui.InitialSetupView
@@ -41,18 +46,42 @@ private val config = SavedStateConfiguration {
 @Composable
 fun MainNavHost() {
     val navBackStack = rememberNavBackStack(config, NavDestination.Login)
-    val currentDestination = navBackStack.last() as? NavDestination
+    // Safely get the current destination
+    val currentDestination = navBackStack.lastOrNull() as? NavDestination
 
-    val showBottomBar = currentDestination in listOf(
-        NavDestination.HomePage,
-        NavDestination.MealPlanner,
-        NavDestination.MarketMap,
-        NavDestination.Profile
-    )
+    val currentUser by AppData.currentUser.collectAsStateWithLifecycle()
+
+    // Define which screens should show the bar
+    val screensWithTopAndBottomBar = remember {
+        setOf(
+            NavDestination.HomePage,
+            NavDestination.MealPlanner,
+            NavDestination.MarketMap,
+            NavDestination.Profile
+        )
+    }
+    val showBar = currentDestination in screensWithTopAndBottomBar
 
     Scaffold(
+        topBar = {
+            if (showBar) {
+                AppHeader(
+                    profileImage = currentUser?.profilePic,
+                    onBackClick = {
+                        if (navBackStack.size > 1) {
+                            navBackStack.removeAt(navBackStack.size - 1)
+                        }
+                    },
+                    onProfileClick = {
+                        if (currentDestination != NavDestination.Profile) {
+                            navBackStack.add(NavDestination.Profile)
+                        }
+                    }
+                )
+            }
+        },
         bottomBar = {
-            if (showBottomBar) {
+            if (showBar) {
                 AppNavigationBar(
                     currentDestination = currentDestination,
                     onItemSelected = { destination ->
@@ -75,6 +104,7 @@ fun MainNavHost() {
                 entry<NavDestination.InitialSetup> { InitialSetupView(navBackStack) }
                 entry<NavDestination.GoalCalculator> { GoalCalculatorView(navBackStack) }
                 entry<NavDestination.SelectUser> { SelectUserView(navBackStack) }
+
                 /* Functionalities */
                 entry<NavDestination.HomePage> { HomePageView(navBackStack) }
                 entry<NavDestination.MealPlanner> { MealPlannerView(navBackStack) }

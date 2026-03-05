@@ -1,9 +1,9 @@
 package com.konrad.intership12026.components.cards
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,7 +12,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -60,9 +59,10 @@ fun AppUserCard(
                     .fillMaxWidth()
             )
         }
+        Spacer(modifier = Modifier.padding(4.dp))
         Text(
-            text = name,  // user.name
-            style = MaterialTheme.typography.bodyMedium,
+            text = name,
+            style = MaterialTheme.typography.labelMedium,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentSize(align = Alignment.Center)

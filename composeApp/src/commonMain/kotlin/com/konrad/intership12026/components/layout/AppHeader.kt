@@ -2,11 +2,9 @@ package com.konrad.intership12026.components.layout
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -39,34 +37,38 @@ fun AppHeader(
     val appColors = AppTheme.colors
 
     CenterAlignedTopAppBar(
-        modifier = Modifier
-            .height(60.dp),
+        modifier = Modifier,
         title = {
             Image(
                 painter = painterResource(Res.drawable.foodie),
-                contentDescription = "App's logo: Foodie",
+                contentDescription = "Foodie Logo",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .height(80.dp)
-                    .padding(12.dp)
+                    .height(32.dp)
+                    .padding(horizontal = 8.dp)
             )
         },
         navigationIcon = {
             if (onBackClick != null) {
                 IconButton(onClick = onBackClick) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = appColors.black)
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = appColors.black
+                    )
                 }
             }
         },
         actions = {
             actions()
+
             if (profileImage != null) {
                 IconButton(onClick = { onProfileClick?.invoke() }) {
                     Image(
                         painter = painterResource(profileImage),
                         contentDescription = "Profile image",
                         modifier = Modifier
-                            .size(36.dp)
+                            .size(32.dp) // Standard icon button size is usually 48dp, image 32dp
                             .clip(CircleShape),
                         contentScale = ContentScale.Crop
                     )
@@ -74,7 +76,8 @@ fun AppHeader(
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = appColors.background
+            containerColor = appColors.background,
+            titleContentColor = appColors.black
         )
     )
 }

@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,56 +21,37 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.konrad.intership12026.components.cards.AppUserCard
 import com.konrad.intership12026.data.AppData
+import com.konrad.intership12026.data.UserModel
 import com.konrad.intership12026.feature.selectuser.model.SelectUserState
 import com.konrad.intership12026.ui.theme.AppTheme
 import intership12026.composeapp.generated.resources.Res
 import intership12026.composeapp.generated.resources.foodie
-import intership12026.composeapp.generated.resources.user1
-import intership12026.composeapp.generated.resources.user2
-import intership12026.composeapp.generated.resources.user3
-import intership12026.composeapp.generated.resources.user4
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-
-data class User(
-    val name: String,
-    val profilePic: DrawableResource
-) {
-    companion object {
-        val dummies = listOf(
-            User("George", Res.drawable.user1),
-            User("Rebecca", Res.drawable.user2),
-            User("Kev", Res.drawable.user3),
-            User("Andrew", Res.drawable.user4)
-        )
-    }
-}
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SelectUserLayout(
     viewState: SelectUserState,
-    onButtonClick: () -> Unit = {}
+    onUserSelected: (UserModel) -> Unit
+
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .padding(horizontal = 32.dp)
+            .verticalScroll(rememberScrollState())
     ) {
-        Spacer(modifier = Modifier.height(48.dp))
-
+        Spacer(modifier = Modifier.height(92.dp))
         Image(
             painter = painterResource(Res.drawable.foodie),
             contentDescription = "App's logo: Foodie",
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .height(80.dp)
+                .height(86.dp)
                 .padding(bottom = 32.dp)
+                .fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -81,18 +64,26 @@ fun SelectUserLayout(
         ){
             Text(
                 text = "Users",
+                style = MaterialTheme.typography.headlineLarge,
+                fontWeight = FontWeight.Bold,
+                color = AppTheme.colors.black,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp, start = 32.dp, end = 32.dp),
-                style = MaterialTheme.typography.headlineMedium,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = AppTheme.colors.black
+                    .padding(top = 48.dp)
             )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Who's ready to eat smart?",
+                style = MaterialTheme.typography.labelLarge,
+                color = AppTheme.colors.black,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(24.dp))
             FlowRow (
                 modifier = Modifier
                     .padding(bottom = 16.dp)
-                    .fillMaxWidth(),
+                    .fillMaxSize(),
                 maxItemsInEachRow = 3,
                 horizontalArrangement = Arrangement.Center
             ){
@@ -102,7 +93,7 @@ fun SelectUserLayout(
                             .padding(8.dp),
                         name = it.firstName,
                         image = it.profilePic,
-                        onClick = { /* .. */ }
+                        onClick = { onUserSelected(it) }
                     )
                 }
             }
@@ -116,7 +107,7 @@ private fun SelectUserLayoutPreview() {
     AppTheme {
         SelectUserLayout(
             viewState = SelectUserState(AppData.users),
-            onButtonClick = { }
+            onUserSelected = { }
         )
     }
 }
